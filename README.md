@@ -7,7 +7,7 @@ This repository houses the Team Apogee's Project, a comprehensive solution desig
 ### Team Members
 - Member 1: Akshay Vijayvergiya
 - Member 2: Nikita Gill
-- Member 3: Payal SamantaPayal Samanta
+- Member 3: Payal Samanta
 - Member 4: Rishin Tiwari
 - Member 5: Saloni Birthare
 
