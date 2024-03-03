@@ -17,7 +17,7 @@
 </p>
 
 
-<h3 align= "center"><img src="akshay-avatar.png" alt="avatar"/></h3>
+<h3 align= "center"><img src="images/akshay-avatar.png" alt="avatar"/></h3>
 
 <h3 align="center">
   👷🏼 Every day, I find myself working with the following technologies:
