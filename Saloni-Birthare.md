@@ -6,4 +6,4 @@ I am a passionate Data Enthusiast with over 3 years of professional experience, 
 
 In addition to my technical expertise, I enjoy interacting with people and learning from their experiences, viewpoints, successes, and failures. I believe in the power of cross-coaching and collective problem-solving. Outside of work, I find joy in singing and immersing myself in various genres of music. Let's connect and explore how we can combine our insights and expertise to drive innovation and make a meaningful impact. 
 
-![Saloni Birthare](Saloni_Birthare-image.jpg)
+![Saloni Birthare](images/Saloni_Birthare-image.jpg)
