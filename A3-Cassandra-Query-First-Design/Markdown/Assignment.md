@@ -1,4 +1,4 @@
-# Project Report: Translating RDBMS Schema to Cassandra for YouTube Data
+# Translating RDBMS Schema to Cassandra for YouTube Data
 
 ## Introduction
 
