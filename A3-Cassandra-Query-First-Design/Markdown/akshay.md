@@ -67,3 +67,12 @@ CREATE TABLE subscriptions_by_user (
     subscription_date timestamp,
     PRIMARY KEY (subscriber_id, subscribed_to_id)
 );
+
+CREATE TABLE video_views_by_video (
+    video_id uuid,
+    view_id uuid,
+    user_id uuid,
+    view_date timestamp,
+    PRIMARY KEY (video_id, view_date, user_id)
+) WITH CLUSTERING ORDER BY (view_date DESC);
+
