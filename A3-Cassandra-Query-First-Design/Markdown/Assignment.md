@@ -79,46 +79,71 @@ The `subscriptions_by_user` table uses `subscriber_id` as the partition key, ena
 - **Table Designs:** Present the final Cassandra table designs, including partition keys, clustering columns, and any secondary indexes.-  Akshay will add snapshots of Cassandra DB
 
 #### Design Decisions:
-The design decisions made in adapting a schema for Cassandra from a traditional RDBMS context are deeply influenced by the need to achieve high performance and scalability, especially in distributed systems environments. Here's a justification of these design decisions, focusing on how they contribute to performance and scalability:
+The design decisions made in adapting the above schema for Cassandra from a traditional RDBMS context are deeply influenced by the need to achieve high performance and scalability, especially in distributed systems environments. Here's a justification of these design decisions, focusing on how they contribute to performance and scalability:
 
 - **Denormalization and Redundancy**
 
     In traditional RDBMS systems, normalization is a core principle used to reduce redundancy and ensure data integrity. However, this often requires complex joins to reconstruct data for queries, which can become a performance bottleneck in distributed systems. Cassandra's emphasis on denormalization and redundancy is a strategic choice designed to minimize the need for joins, thereby significantly improving read performance. Storing data in the form it will be queried allows for fast, direct lookups without the overhead of assembling data from multiple tables.
 
-### Schema Design Based on Query Patterns
+- **Schema Design Based on Query Patterns**
 
-**Justification:** Cassandra requires a schema design that is closely aligned with query patterns. This design approach ensures that each query can be served efficiently by directly accessing a table optimized for that query, thus reducing the read and write latencies. By tailoring the data model to the application's access patterns, Cassandra can offer rapid responses to client requests, enhancing user experience and system throughput.
+    Cassandra requires a schema design that is closely aligned with query patterns. This design approach ensures that each query can be served efficiently by directly accessing a table optimized for that query, thus reducing the read and write latencies. By tailoring the data model to the application's access patterns, Cassandra can offer rapid responses to client requests, enhancing user experience and system throughput.
 
-### Primary Key and Data Distribution
+- **Primary Key and Data Distribution**
 
-**Justification:** The choice of partition key in Cassandra is critical as it determines how data is distributed across the cluster. A well-chosen partition key ensures uniform data distribution, avoiding hotspots and ensuring that no single node becomes a bottleneck. This uniform distribution is essential for scalability, as it ensures that the addition of nodes linearly increases the capacity of the system. Clustering columns, part of the primary key, allow for efficient sorting and retrieval within a partition, further optimizing access patterns.
+    The choice of partition key in Cassandra is critical as it determines how data is distributed across the cluster. A well-chosen partition key ensures uniform data distribution, avoiding hotspots and ensuring that no single node becomes a bottleneck. This uniform distribution is essential for scalability, as it ensures that the addition of nodes linearly increases the capacity of the system. Clustering columns, part of the primary key, allow for efficient sorting and retrieval within a partition, further optimizing access patterns.
 
-### Horizontal Scalability
+- **Horizontal Scalability**
 
-**Justification:** Cassandra's data model and architecture are designed for horizontal scalability, meaning that it can handle increased load by adding more nodes to the cluster without significant reconfiguration. This scalability is achieved through data partitioning and replication, which allow the database to distribute loads evenly across the cluster and ensure data availability even in the face of node failures. This design is crucial for applications that require high availability and the ability to scale on demand.
+    Cassandra's data model and architecture are designed for horizontal scalability, meaning that it can handle increased load by adding more nodes to the cluster without significant reconfiguration. This scalability is achieved through data partitioning and replication, which allow the database to distribute loads evenly across the cluster and ensure data availability even in the face of node failures. This design is crucial for applications that require high availability and the ability to scale on demand.
 
-### Eventual Consistency Model
+- **Eventual Consistency Model**
 
-**Justification:** Cassandra adopts an eventual consistency model to maximize availability and partition tolerance, key components of the CAP theorem. This model allows Cassandra to continue operations even when some nodes are unreachable, ensuring that writes are not lost and can be replicated across the cluster once the affected nodes are back online. The ability to tune the consistency level for reads and writes allows developers to make trade-offs between consistency, availability, and latency based on the specific needs of their application.
+    Cassandra adopts an eventual consistency model to maximize availability and partition tolerance, key components of the CAP theorem. This model allows Cassandra to continue operations even when some nodes are unreachable, ensuring that writes are not lost and can be replicated across the cluster once the affected nodes are back online. The ability to tune the consistency level for reads and writes allows developers to make trade-offs between consistency, availability, and latency based on the specific needs of their application.
 
-### Write and Read Throughput
+- **Write and Read Throughput**
 
-**Justification:** Cassandra's write-optimized storage engine and the use of partition keys for data distribution lead to high write and read throughput. The architecture is designed to absorb high write loads by evenly distributing data across the cluster, thereby avoiding write bottlenecks. For reads, Cassandra's data model, which encourages storing data in the form it will be queried, enables efficient data retrieval without the need for resource-intensive operations like joins.
+    Cassandra's write-optimized storage engine and the use of partition keys for data distribution lead to high write and read throughput. The architecture is designed to absorb high write loads by evenly distributing data across the cluster, thereby avoiding write bottlenecks. For reads, Cassandra's data model, which encourages storing data in the form it will be queried, enables efficient data retrieval without the need for resource-intensive operations like joins.
 
 ## Discussion
+In this section, let's discuss on the challenges we faced during the translation process along with the considerations made and trade-offs in using Cansandra model.
 
-Reflect on the challenges and considerations encountered during the schema translation process. Discuss the trade-offs of using Cassandra over traditional RDBMS for the YouTube application.
+### Challenges and Considerations - Akshay to add team's challenges in below points
 
-### Challenges and Considerations - Check raw data folder for both below challengeConsideration.md 
+- **Data Duplication:** Unlike RDBMS, where normalization is key to reducing data redundancy, Cassandra encourages denormalization for performance reasons. Managing data duplication across tables requires careful planning to ensure data consistency and integrity, which can be more complex to implement at the application level.
+- **Query Flexibility:** RDBMS offers a high degree of query flexibility, including joins and sub-queries, allowing for complex queries against normalized data. Cassandra restricts query patterns to those explicitly modeled in the schema, requiring a thorough understanding of the application's query patterns upfront.
+- **Transaction Support:** Cassandra provides limited support for ACID transactions, mainly through lightweight transactions that offer serial consistency but at a higher latency. Applications requiring complex transactions with strict ACID properties might find this limitation challenging.
+- **Data Consistency:** The eventual consistency model of Cassandra, while beneficial for scalability and availability, requires applications to handle inconsistencies that might arise, unlike the strong consistency model typically provided by RDBMS.
+- **Schema Evolution:** Modifying the schema in Cassandra, especially changing the primary key of existing tables, can be more cumbersome than in RDBMS. This requires planning ahead for future requirements to avoid complex migrations.
 
-- Describe the challenges faced during the translation process.
-- Discuss any considerations that had to be made due to Cassandra's data model and architecture.
+### Trade-offs - any more limitaion to add here ?
 
-### Trade-offs -Check raw data folder challengeConsideration.md 
-
-- Analyze the trade-offs of using Cassandra instead of a traditional RDBMS, considering the application's requirements.
+- **Scalability:** Cassandra shines in scenarios requiring horizontal scalability. It allows the YouTube application to handle massive volumes of data across many nodes efficiently, something that traditional RDBMS might struggle with at scale. This is a significant advantage for a global platform like YouTube, where data growth is continuous and exponential.
+- **Availability:** Cassandra's distributed nature ensures high availability, with no single point of failure. This is crucial for a service like YouTube, where downtime directly impacts user experience and revenue.
+- **Write Performance:** Cassandra offers excellent write performance across distributed architectures, making it suitable for write-heavy applications like YouTube, where new data (videos, comments, likes) are continuously being added.
+- **Read Performance:** With a well-designed schema, Cassandra can also provide efficient read operations, particularly for use cases where data is read frequently but updated less often, such as video views or user profiles in YouTube.
+- **Operational Complexity vs. Flexibility:** While Cassandra reduces some operational complexities related to scalability and availability, it introduces others, such as the need for careful data model planning and the management of data duplication. This trade-off requires a careful consideration of the application's specific needs and long-term maintenance capabilities.
 
 ## Conclusion - check raw data conclusion.md
 
-Summarize the key learning outcomes from this project and discuss the potential real-world implications of the schema design decisions made for the YouTube application. Highlight how these decisions could influence the application's performance and scalability in a big data context.
+The project of translating a traditional RDBMS schema to a Cassandra schema for an application akin to YouTube offers profound insights into the intricacies of data modeling in NoSQL environments, specifically within the domain of high-scalability requirements. Here are the key learning outcomes and their potential real-world implications:
+
+### Key Learning Outcomes
+
+- **Data Modeling Around Queries:** One of the cardinal principles in using Cassandra effectively is the practice of modeling your data based on the queries you intend to run, rather than trying to fit your queries to a predetermined data model. This approach ensures that each query can be served with the utmost efficiency, directly impacting the application's responsiveness and user experience.
+- **The Importance of Denormalization:** Embracing denormalization and understanding how to manage data duplication across tables are crucial. This strategy significantly differs from the normalization practices in RDBMS and is key to achieving high read and write performance in distributed systems like Cassandra.
+- **Scalability and Performance:** The schema design decisions directly impact the application's ability to scale and perform under the pressures of big data. Cassandra's model facilitates linear scalability, allowing the YouTube application to grow seamlessly as demand increases.
+- **Consistency vs. Availability:** The trade-offs between consistency and availability, as dictated by the CAP theorem, become starkly evident in this project. Cassandra's eventual consistency model, tuned for high availability and partition tolerance, requires a different approach to handling data integrity, especially in globally distributed applications.
+
+### Real-world Implications
+
+- **User Experience:** Fast read and write operations, facilitated by efficient schema design, ensure that users experience minimal latency when accessing videos, posting comments, or viewing recommendations. This responsiveness is crucial for user retention and engagement in competitive online spaces.
+- **Operational Efficiency:** The ability to scale horizontally with ease means that the YouTube application can handle peak loads without significant rearchitecting or downtime for maintenance. This operational efficiency translates to cost savings and improved service reliability.
+- **Data Integrity and Management:** While Cassandra's design optimizes for performance and scalability, it imposes an additional burden on application developers to manage data consistency across denormalized tables. This could require more sophisticated application logic or background processes to ensure data integrity, impacting development and operational overhead.
+- **Global Reach:** The distributed nature of Cassandra's architecture makes it well-suited for applications requiring global reach. Data can be replicated across geographically dispersed data centers, reducing latency for users worldwide and enhancing the application's availability and disaster recovery capabilities.
+
+### Influence on Performance and Scalability
+
+- **Performance:** Direct access patterns designed into the schema mean that data can be retrieved with minimal overhead, supporting high-throughput and low-latency operations essential for a fluid user experience in a data-intensive application like YouTube.
+- **Scalability:** The schema's design inherently supports distributed data storage, enabling the YouTube application to scale out across multiple servers and data centers. This capability is essential for accommodating the exponential growth in users and data volume, characteristic of successful online platforms.
 
