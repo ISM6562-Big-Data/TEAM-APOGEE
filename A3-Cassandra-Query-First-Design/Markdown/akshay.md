@@ -17,7 +17,7 @@ The project's significance lies in its exploration of transitioning from an RDBM
 The RDBMS schema designed for the YouTube application is detailed below, highlighting its key components, relationships, and assumptions made about the data and its usage. The schema is normalized to ensure data integrity and reduce redundancy.
 
 #### ERD:
-! (alt text), /(erd.png), and ``Text to show on mouseover'
+![ERD](erd.png)
 
 #### Tables:
 1. **Users Table:**
