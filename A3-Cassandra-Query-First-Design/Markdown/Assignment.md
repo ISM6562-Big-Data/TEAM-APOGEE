@@ -461,15 +461,13 @@ The design decisions made in adapting the above schema for Cassandra from a trad
 ## Discussion
 In this section, let's discuss on the challenges we faced during the translation process along with the considerations made and trade-offs in using Cansandra model.
 
-### Challenges and Considerations - Akshay to add team's challenges in below points
+### Challenges and Considerations
 
-- **Data Duplication:** Unlike RDBMS, where normalization is key to reducing data redundancy, Cassandra encourages denormalization for performance reasons. Managing data duplication across tables requires careful planning to ensure data consistency and integrity, which can be more complex to implement at the application level.
-- **Query Flexibility:** RDBMS offers a high degree of query flexibility, including joins and sub-queries, allowing for complex queries against normalized data. Cassandra restricts query patterns to those explicitly modeled in the schema, requiring a thorough understanding of the application's query patterns upfront.
-- **Transaction Support:** Cassandra provides limited support for ACID transactions, mainly through lightweight transactions that offer serial consistency but at a higher latency. Applications requiring complex transactions with strict ACID properties might find this limitation challenging.
-- **Data Consistency:** The eventual consistency model of Cassandra, while beneficial for scalability and availability, requires applications to handle inconsistencies that might arise, unlike the strong consistency model typically provided by RDBMS.
-- **Schema Evolution:** Modifying the schema in Cassandra, especially changing the primary key of existing tables, can be more cumbersome than in RDBMS. This requires planning ahead for future requirements to avoid complex migrations.
+- **Query First Design:** Unlike RDBMS, where we had Entities, and relationships described in an ERD and we can make the whole DB normalized and then the DB would be flexible enough to support all type of operations to be performed on the Database. But in case of Cassandra, we first had to understand our use case that is YouTube in our case where we first planned all the queries that we needed to make and then we designed the architecture of Cassandra tables as per the queries for efficient retrieval and faster reads and writes.
+- **Query Flexibility:** Unlike RDBMS which is flexible to enough various operations possible on data with the help of Joining several tables together and achieve consistency all along but in the case of Cassandra, we are missing Joins. So two things comes to our rescue, either can make data redundant everywhere using query first approach and trust developers that they will handle the transaction of updating the data at all places or else we can do application level joins. Using Hybrid blend of above two methods is the best way to design an application but is challenging as well at the same time.
+- **Data Consistency:** Since in RDBMS, data is always normalized and non-reduandant so consistency can never be a problem. But in Cassandra, we have replicas of data in several nodes as well as in different tables as well. Just as if a user updates his information in a table, the same has to be reflected back in different tables as well as in different nodes carrying its replica. To maintain such consistency and eventual consistency is a challenge to maintain.
 
-### Trade-offs - any more limitaion to add here ?
+### Trade-offs
 
 - **Scalability:** Cassandra shines in scenarios requiring horizontal scalability. It allows the YouTube application to handle massive volumes of data across many nodes efficiently, something that traditional RDBMS might struggle with at scale. This is a significant advantage for a global platform like YouTube, where data growth is continuous and exponential.
 - **Availability:** Cassandra's distributed nature ensures high availability, with no single point of failure. This is crucial for a service like YouTube, where downtime directly impacts user experience and revenue.
