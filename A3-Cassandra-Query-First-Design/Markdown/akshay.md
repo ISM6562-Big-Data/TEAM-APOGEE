@@ -277,7 +277,159 @@ The `subscriptions_by_user` table uses `subscriber_id` as the partition key, ena
 ### Final Cassandra Schema
 
 #### Table Designs:
-Present the final Cassandra table designs, including partition keys, clustering columns, and any secondary indexes.-  Akshay will add snapshots of Cassandra DB
+Below are the tables created in Casandra along with partitions and clustering columns. Its followed by the list of CQL queries which were discussed above in the deisgn process.
+
+### 1. Users Table
+
+For user operations like fetching profiles, logging in, and updating details, we can keep a structure similar to the relational `users` table, but with Cassandra's data type adjustments.
+
+```cql
+CREATE TABLE users (
+    user_id uuid PRIMARY KEY,
+    username text,
+    email text,
+    password_hash text,
+    join_date timestamp,
+    last_login timestamp
+);
+```
+
+### 2. Videos by User
+
+To list videos uploaded by a user, creating a table that partitions videos by user_id. This table allows efficient retrieval of videos for a given user.
+
+```cql
+CREATE TABLE videos_by_user (
+    user_id uuid,
+    video_id uuid,
+    title text,
+    description text,
+    upload_date timestamp,
+    duration int,
+    views int,
+    status text,
+    PRIMARY KEY (user_id, video_id)
+) WITH CLUSTERING ORDER BY (upload_date DESC);
+```
+
+### 3. Comments for a Video
+
+To fetch comments for a specific video, model comments around video_id.
+
+```cql
+CREATE TABLE comments_by_video (
+    video_id uuid,
+    comment_id uuid,
+    user_id uuid,
+    comment_text text,
+    comment_date timestamp,
+    PRIMARY KEY (video_id, comment_id)
+) WITH CLUSTERING ORDER BY (comment_date DESC);
+```
+
+### 4. Comments by a User
+
+Similarly, for retrieving comments made by a user:
+
+```cql
+CREATE TABLE comments_by_user (
+    user_id uuid,
+    comment_id uuid,
+    video_id uuid,
+    comment_text text,
+    comment_date timestamp,
+    PRIMARY KEY (user_id, comment_date)
+) WITH CLUSTERING ORDER BY (comment_date DESC);
+```
+
+### 5. Users who Liked a Video
+
+To list users who liked a video, you can create a table based on `video_id`.
+
+```cql
+CREATE TABLE likes_by_video (
+    video_id uuid,
+    user_id uuid,
+    like_date timestamp,
+    PRIMARY KEY (video_id, user_id)
+);
+```
+
+### 6. Videos Liked by a User
+
+Track which videos a user has liked:
+
+```cql
+CREATE TABLE likes_by_user (
+    user_id uuid,
+    video_id uuid,
+    like_date timestamp,
+    PRIMARY KEY (user_id, video_id)
+);
+```
+
+### 7. Viewing Channel Subscriptions
+
+Subscriptions can be modeled to easily retrieve who a user is subscribed to.
+
+```cql
+CREATE TABLE subscriptions_by_user (
+    subscriber_id uuid,
+    subscribed_to_id uuid,
+    subscription_date timestamp,
+    PRIMARY KEY (subscriber_id, subscribed_to_id)
+);
+```
+
+### 8. Tracking Video Views by Video
+Below design would typically focus on the video_id as the partition key to facilitate efficient retrieval of views per video. 
+
+```cql
+CREATE TABLE video_views_by_video (
+    video_id uuid,
+    view_id uuid,
+    user_id uuid,
+    view_date timestamp,
+    PRIMARY KEY (video_id, view_date, user_id)
+) WITH CLUSTERING ORDER BY (view_date DESC);
+```
+
+### Considerations
+
+- Each use case is backed by a specific table designed to satisfy the query efficiently.
+- Redundancy is expected and normal in NoSQL databases like Cassandra to facilitate fast reads.
+
+## CQL Queries as per YouTube Usecase
+
+### 1. Retrieve all videos uploaded by a specific user
+```cql
+SELECT * FROM videos_by_user WHERE user_id = 'UC_YO8yjS9';
+```
+
+### 2. Retrieve all comments on a specific video
+```cql
+SELECT * FROM comments_by_video WHERE video_id = 'VYOjWN14yjS1516214';
+```
+
+### 3. Retrieve all comments made by a specific user
+```cql
+SELECT * FROM comments_by_user WHERE user_id = 'UC_YO13yjS14';
+```
+
+### 4. Listing users who liked a specific video
+```cql
+SELECT * FROM likes_by_video WHERE video_id = 'VYOjWN15yjS1617215';
+```
+
+### 5. Tracking videos liked by a user
+```cql
+SELECT * FROM likes_by_user WHERE user_id = 'UC_YO13yjS14';
+```
+
+### 6. Viewing channel subscriptions
+```cql
+SELECT * FROM subscriptions_by_user WHERE subscriber_id = 'UC_YO1yjS2';
+```
 
 #### Design Decisions:
 The design decisions made in adapting the above schema for Cassandra from a traditional RDBMS context are deeply influenced by the need to achieve high performance and scalability, especially in distributed systems environments. Here's a justification of these design decisions, focusing on how they contribute to performance and scalability:
@@ -309,15 +461,13 @@ The design decisions made in adapting the above schema for Cassandra from a trad
 ## Discussion
 In this section, let's discuss on the challenges we faced during the translation process along with the considerations made and trade-offs in using Cansandra model.
 
-### Challenges and Considerations - Akshay to add team's challenges in below points
+### Challenges and Considerations
 
-- **Data Duplication:** Unlike RDBMS, where normalization is key to reducing data redundancy, Cassandra encourages denormalization for performance reasons. Managing data duplication across tables requires careful planning to ensure data consistency and integrity, which can be more complex to implement at the application level.
-- **Query Flexibility:** RDBMS offers a high degree of query flexibility, including joins and sub-queries, allowing for complex queries against normalized data. Cassandra restricts query patterns to those explicitly modeled in the schema, requiring a thorough understanding of the application's query patterns upfront.
-- **Transaction Support:** Cassandra provides limited support for ACID transactions, mainly through lightweight transactions that offer serial consistency but at a higher latency. Applications requiring complex transactions with strict ACID properties might find this limitation challenging.
-- **Data Consistency:** The eventual consistency model of Cassandra, while beneficial for scalability and availability, requires applications to handle inconsistencies that might arise, unlike the strong consistency model typically provided by RDBMS.
-- **Schema Evolution:** Modifying the schema in Cassandra, especially changing the primary key of existing tables, can be more cumbersome than in RDBMS. This requires planning ahead for future requirements to avoid complex migrations.
+- **Query First Design:** Unlike RDBMS, where we had Entities, and relationships described in an ERD and we can make the whole DB normalized and then the DB would be flexible enough to support all type of operations to be performed on the Database. But in case of Cassandra, we first had to understand our use case that is YouTube in our case where we first planned all the queries that we needed to make and then we designed the architecture of Cassandra tables as per the queries for efficient retrieval and faster reads and writes.
+- **Query Flexibility:** Unlike RDBMS which is flexible to enough various operations possible on data with the help of Joining several tables together and achieve consistency all along but in the case of Cassandra, we are missing Joins. So two things comes to our rescue, either can make data redundant everywhere using query first approach and trust developers that they will handle the transaction of updating the data at all places or else we can do application level joins. Using Hybrid blend of above two methods is the best way to design an application but is challenging as well at the same time.
+- **Data Consistency:** Since in RDBMS, data is always normalized and non-reduandant so consistency can never be a problem. But in Cassandra, we have replicas of data in several nodes as well as in different tables as well. Just as if a user updates his information in a table, the same has to be reflected back in different tables as well as in different nodes carrying its replica. To maintain such consistency and eventual consistency is a challenge to maintain.
 
-### Trade-offs - any more limitaion to add here ?
+### Trade-offs
 
 - **Scalability:** Cassandra shines in scenarios requiring horizontal scalability. It allows the YouTube application to handle massive volumes of data across many nodes efficiently, something that traditional RDBMS might struggle with at scale. This is a significant advantage for a global platform like YouTube, where data growth is continuous and exponential.
 - **Availability:** Cassandra's distributed nature ensures high availability, with no single point of failure. This is crucial for a service like YouTube, where downtime directly impacts user experience and revenue.
