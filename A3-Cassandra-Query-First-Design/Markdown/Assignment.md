@@ -22,8 +22,8 @@ This section lists and analyzes the essential queries for the YouTube applicatio
 
 ### Essential Queries
 
-- List the queries considered essential for the application.
-- Discuss how these queries influence the design of the Cassandra schema.
+- List the queries considered essential for the application. -  (We will get these queries from Saloni and put it here with some description.)
+- Discuss how these queries influence the design of the Cassandra schema. - Check raw data folder
 
 ## Design Cassandra Schema
 
@@ -31,28 +31,28 @@ Adopting the "Query First" design philosophy, this section documents the process
 
 ### Design Process
 
-- **Query Optimization:** Explain how the Cassandra schema is designed around the essential queries identified earlier.
-- **Data Model Influences:** Highlight the differences in schema design between Cassandra and traditional RDBMS, focusing on Cassandra's data model.
+- **Query Optimization:** Explain how the Cassandra schema is designed around the essential queries identified earlier.  - Check raw data folder
+- **Data Model Influences:** Highlight the differences in schema design between Cassandra and traditional RDBMS, focusing on Cassandra's data model.  - Check raw data folder
 
 ### Final Cassandra Schema
 
-- **Table Designs:** Present the final Cassandra table designs, including partition keys, clustering columns, and any secondary indexes.
-- **Justification:** Justify the design decisions, focusing on performance and scalability.
+- **Table Designs:** Present the final Cassandra table designs, including partition keys, clustering columns, and any secondary indexes.-  Akshay will add snapshots of Cassandra DB
+- **Justification:** Justify the design decisions, focusing on performance and scalability. - (check raw data folder)
 
 ## Discussion
 
 Reflect on the challenges and considerations encountered during the schema translation process. Discuss the trade-offs of using Cassandra over traditional RDBMS for the YouTube application.
 
-### Challenges and Considerations
+### Challenges and Considerations - Check raw data folder for both below challengeConsideration.md 
 
 - Describe the challenges faced during the translation process.
 - Discuss any considerations that had to be made due to Cassandra's data model and architecture.
 
-### Trade-offs
+### Trade-offs -Check raw data folder challengeConsideration.md 
 
 - Analyze the trade-offs of using Cassandra instead of a traditional RDBMS, considering the application's requirements.
 
-## Conclusion
+## Conclusion - check raw data conclusion.md
 
 Summarize the key learning outcomes from this project and discuss the potential real-world implications of the schema design decisions made for the YouTube application. Highlight how these decisions could influence the application's performance and scalability in a big data context.
 
