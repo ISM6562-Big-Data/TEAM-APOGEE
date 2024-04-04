@@ -2,13 +2,16 @@
 
 ## Introduction
 
-This project focuses on the translation of Relational Database Management System (RDBMS) schemas into Apache Cassandra schemas, specifically tailored for big data applications using YouTube as a case study. The aim is to harness Cassandra's capabilities for fast reads and writes, as well as horizontal scalability, to address the demands of handling large volumes of data. This report outlines the project's scope, objectives, and the significance of this translation in the context of big data applications.
+This project focuses on the translation of RRDBMS schemas into Cassandra schemas, specifically tailored for big data applications using YouTube as a case study. The aim is to harness Cassandra's capabilities for fast reads and writes, as well as horizontal scalability, to address the demands of handling large volumes of data. Our project involves analyzing the RDBMS schema, identifying essential queries, and designing a Cassandra schema using a "Query First" approach. The scope encompasses documenting the RDBMS schema, designing CQL queries, and creating Cassandra schema tables, partitions, and clustering columns.
 
-### Scope and Objectives
-- Highlight the differences in schema design between Cassandra and traditional RDBMS, focusing on Cassandra's data model
-- Demonstrate Cassandra's design principle of modeling your data based on how you will query it, rather than trying to minimize data duplication as you would in a traditional relational database. 
-- Design tables to ensure efficient data retrieval that aligns with Cassandra’s strengths in handling large-scale, distributed data. - By duplicating data across tables where necessary, we prioritize query performance and scalability, key advantages of using Cassandra for applications with heavy read and write requirements.
-- 
+### Objectives
+- To create and analyse a normalised RDBMS schema design and discuss its key componenets and relationships
+- Develop queries to drive Cassandra schema design, utilizing the "Query First" approach to convert RDBMS schema into Cassandra schema, while emphasizing disparities in data modeling between Cassandra and traditional RDBMS.
+- Reflect on the challenges and considerations encountered during the translation process, and discuss the trade-offs of using Cassandra over traditional RDBMS in the context of the YouTube application.
+- Summarize the learning outcomes and potential real-world implications of the schema design decisions made throughout the project.
+
+### Significance
+The project's significance lies in its exploration of transitioning from an RDBMS to Cassandra, underlining the importance of understanding application query patterns and embracing denormalization for enhanced performance and scalability. Focused on YouTube as a case study, it offers insights into real-world schema translation challenges and underscores Cassandra's aptitude for handling large data volumes. Moreover, the project deepens comprehension of Cassandra's data modeling principles, highlighting its advantages in scalability and performance, despite schema translation complexities, making it a compelling choice for applications like YouTube with heavy read and write requirements. We have also successfully inserted data, further enriching the project's depth and relevance.
 
 ## RDBMS Schema Analysis
 The RDBMS schema designed for the YouTube application is detailed below, highlighting its key components, relationships, and assumptions made about the data and its usage. The schema is normalized to ensure data integrity and reduce redundancy.
