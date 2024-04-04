@@ -124,7 +124,7 @@ In this section, let's discuss on the challenges we faced during the translation
 - **Read Performance:** With a well-designed schema, Cassandra can also provide efficient read operations, particularly for use cases where data is read frequently but updated less often, such as video views or user profiles in YouTube.
 - **Operational Complexity vs. Flexibility:** While Cassandra reduces some operational complexities related to scalability and availability, it introduces others, such as the need for careful data model planning and the management of data duplication. This trade-off requires a careful consideration of the application's specific needs and long-term maintenance capabilities.
 
-## Conclusion - check raw data conclusion.md
+## Conclusion
 
 The project of translating a traditional RDBMS schema to a Cassandra schema for an application akin to YouTube offers profound insights into the intricacies of data modeling in NoSQL environments, specifically within the domain of high-scalability requirements. Here are the key learning outcomes and their potential real-world implications:
 
