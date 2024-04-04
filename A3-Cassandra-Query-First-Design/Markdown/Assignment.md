@@ -20,42 +20,113 @@ The RDBMS schema designed for the YouTube application is detailed below, highlig
 1. **Users Table:**
    - Contains information about users such as user ID, username, email, password hash, join date, and last login date.
    - Primary key: user_id.
+    ```sql
+   CREATE TABLE users (
+    user_id VARCHAR PRIMARY KEY,
+    username TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    join_date TIMESTAMP WITH TIME ZONE NOT NULL,
+    last_login TIMESTAMP WITH TIME ZONE
+    );
+    ```
    
 2. **Videos Table:**
    - Stores data related to videos uploaded by users including video ID, user ID of the uploader, title, description, upload date, duration, views, and status.
    - Primary key: video_id.
    - Foreign key: user_id references the Users Table.
+    ```sql
+   CREATE TABLE videos (
+    video_id VARCHAR PRIMARY KEY,
+    user_id VARCHAR NOT NULL,
+    title TEXT NOT NULL,
+    description TEXT,
+    upload_date TIMESTAMP WITH TIME ZONE NOT NULL,
+    duration INT NOT NULL, -- assuming duration in seconds
+    views INT DEFAULT 0,
+    status VARCHAR(50),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    );
+    ```
    
 3. **Comments Table:**
    - Holds comments made by users on specific videos, including comment ID, user ID of the commenter, video ID of the commented video, comment text, and comment date.
    - Primary key: comment_id.
    - Foreign keys: user_id and video_id reference the Users and Videos Tables respectively.
-   
+    ```sql
+   CREATE TABLE comments (
+    comment_id VARCHAR PRIMARY KEY,
+    user_id VARCHAR NOT NULL,
+    video_id VARCHAR NOT NULL,
+    comment_text TEXT NOT NULL,
+    comment_date TIMESTAMP WITH TIME ZONE NOT NULL,
+    FOREIGN KEY (video_id) REFERENCES videos(video_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    );
+   ```
 4. **VideoLikes Table:**
    - Records likes given by users to videos, with like ID, user ID of the liker, and video ID of the liked video.
    - Primary key: like_id.
    - Foreign keys: user_id and video_id reference the Users and Videos Tables respectively.
-   
+    ```sql
+   CREATE TABLE videolikes (
+    like_id VARCHAR PRIMARY KEY,
+    user_id VARCHAR NOT NULL,
+    video_id VARCHAR NOT NULL,
+    FOREIGN KEY (video_id) REFERENCES videos(video_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    );
+   ```
 5. **Subscriptions Table:**
    - Tracks user subscriptions to other users, with subscription ID, subscriber ID, subscribed-to ID, and subscription date.
    - Primary key: subscription_id.
    - Foreign keys: subscriber_id and subscribed_to_id reference the Users Table.
-   
+    ```sql
+   CREATE TABLE subscriptions (
+    subscription_id VARCHAR PRIMARY KEY,
+    subscriber_id VARCHAR NOT NULL,
+    subscribed_to_id VARCHAR NOT NULL,
+    subscription_date TIMESTAMP WITH TIME ZONE NOT NULL,
+    FOREIGN KEY (subscriber_id) REFERENCES users(user_id),
+    FOREIGN KEY (subscribed_to_id) REFERENCES users(user_id)
+    );
+   ```
 6. **Categories Table:**
    - Stores video categories with category ID and category name.
    - Primary key: category_id.
    - Unique constraint: category_name.
-   
+    ```sql
+   CREATE TABLE categories (
+    category_id VARCHAR PRIMARY KEY,
+    category_name TEXT NOT NULL UNIQUE
+    );
+   ```
 7. **VideoCategories Table:**
    - Represents a many-to-many relationship between videos and categories, linking video IDs with category IDs.
    - Composite primary key: (video_id, category_id).
    - Foreign keys: video_id references the Videos Table, category_id references the Categories Table.
-   
+    ```sql
+   CREATE TABLE videocategories (
+    category_id VARCHAR NOT NULL,
+    video_id VARCHAR NOT NULL,
+    PRIMARY KEY (video_id, category_id),
+    FOREIGN KEY (video_id) REFERENCES videos(video_id),
+    FOREIGN KEY (category_id) REFERENCES categories(category_id)
+    );
+   ```
 8. **VideoViews Table:**
    - Records views on videos, with view ID, user ID of the viewer (nullable for non-logged-in users), and video ID of the viewed video.
    - Primary key: view_id.
    - Foreign keys: user_id and video_id reference the Users and Videos Tables respectively.
-
+   ```sql
+    CREATE TABLE videoviews (
+    view_id VARCHAR PRIMARY KEY,
+    user_id VARCHAR,-- This can be NULL to track views from non-logged in users
+    video_id VARCHAR NOT NULL,
+    FOREIGN KEY (video_id) REFERENCES videos(video_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    );
+    ```
 #### Relationships:
 - Users can upload videos (one-to-many relationship between Users and Videos).
 - Users can leave comments on videos (one-to-many relationship between Users and Comments, and Videos and Comments).
