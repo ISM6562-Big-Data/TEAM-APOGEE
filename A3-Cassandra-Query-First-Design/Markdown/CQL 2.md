@@ -129,35 +129,42 @@ In RDBMS, Primary keys are often simple and single-column.But in Cassandra, Prim
 
 ### 1. Retrieve all videos uploaded by a specific user:
 
+SELECT * FROM videos_by_user WHERE user_id = <user_id>;
+
 **Description:**
 - **Usefulness in Cassandra:** This query is useful because in Cassandra, denormalization is common, and queries are designed to be efficient for specific access patterns. Storing videos by user allows for fast retrieval of all videos uploaded by a particular user without the need for joins.
 - **Difference from RDBMS:** In traditional RDBMS, you might have a normalized schema where videos are stored in a separate table and linked to users through foreign key relationships. Joins would be required to retrieve all videos uploaded by a specific user, potentially leading to performance issues at scale.
 
 ### 2. Retrieve all comments on a specific video, sorted by date:
+SELECT * FROM comments_by_video WHERE video_id = <video_id>;
 
 **Description:**
 - **Usefulness in Cassandra:** Storing comments by video allows for efficient retrieval of comments related to a particular video. Sorting by date enables retrieving comments in chronological order, which can be important for displaying comments in applications.
 - **Difference from RDBMS:** In RDBMS, comments might be stored in a separate table linked to videos through foreign keys. Join operations would be needed to retrieve comments for a specific video and sorting might require additional processing.
 
 ### 3. Retrieve all comments made by a specific user, sorted by date:
+SELECT * FROM comments_by_user WHERE user_id = <user_id>;
 
 **Description:**
 - **Usefulness in Cassandra:** Storing comments by user allows for efficient retrieval of comments made by a particular user. Sorting by date enables retrieving comments in chronological order, which can be useful for displaying a user's comment history.
 - **Difference from RDBMS:** In RDBMS, comments might be stored in a separate table linked to users through foreign keys. Join operations would be needed to retrieve comments made by a specific user and sorting might require additional processing.
 
 ### 4. Retrieve all likes received by a specific video:
+SELECT * FROM likes_by_video WHERE video_id = <video_id>;
 
 **Description:**
 - **Usefulness in Cassandra:** Storing likes by video allows for efficient retrieval of likes received by a particular video. This schema design optimizes for read operations when displaying the popularity of a video.
 - **Difference from RDBMS:** In RDBMS, likes might be stored in a separate table linked to videos through foreign keys. Join operations would be needed to retrieve likes received by a specific video.
 
 ### 5. Retrieve all likes given by a specific user:
+SELECT * FROM likes_by_user WHERE user_id = <user_id>;
 
 **Description:**
 - **Usefulness in Cassandra:** Storing likes by user allows for efficient retrieval of likes given by a particular user. This schema design optimizes for read operations when displaying a user's liked content.
 - **Difference from RDBMS:** In RDBMS, likes might be stored in a separate table linked to users through foreign keys. Join operations would be needed to retrieve likes given by a specific user.
 
 ### 6. Retrieve all subscriptions made by a specific user:
+SELECT * FROM subscriptions_by_user WHERE subscriber_id = <subscriber_id>;
 
 **Description:**
 - **Usefulness in Cassandra:** Storing subscriptions by user allows for efficient retrieval of subscriptions made by a particular user. This schema design optimizes for read operations when displaying a user's subscriptions.
