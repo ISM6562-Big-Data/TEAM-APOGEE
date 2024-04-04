@@ -72,11 +72,10 @@ For tracking which videos a user has liked, the `likes_by_user` table, with `use
 
 The `subscriptions_by_user` table uses `subscriber_id` as the partition key, enabling efficient queries to view all channels a user is subscribed to. This table design is optimized for the subscription viewing pattern, ensuring that subscription information is easily accessible by subscriber ID.
 
-#### Data Model Influences:Highlight the differences in schema design between Cassandra and traditional RDBMS, focusing on Cassandra's data model.  - Check raw data folder
-
 ### Final Cassandra Schema
 
-- **Table Designs:** Present the final Cassandra table designs, including partition keys, clustering columns, and any secondary indexes.-  Akshay will add snapshots of Cassandra DB
+#### Table Designs:
+Present the final Cassandra table designs, including partition keys, clustering columns, and any secondary indexes.-  Akshay will add snapshots of Cassandra DB
 
 #### Design Decisions:
 The design decisions made in adapting the above schema for Cassandra from a traditional RDBMS context are deeply influenced by the need to achieve high performance and scalability, especially in distributed systems environments. Here's a justification of these design decisions, focusing on how they contribute to performance and scalability:
