@@ -33,6 +33,10 @@ The RDBMS schema designed for the YouTube application is detailed below, highlig
     last_login TIMESTAMP WITH TIME ZONE
     );
     ```
+
+| User_ID      | username | email | password_hash | join_date | last_login|
+| ----------- | ----------- | ----| -----| ---|----|
+| UC_YO1yjS2  | greenwilliam   |chambersstanley@example.org | **** | 2020-10-12 |2024-03-0803:20:39|
    
 2. **Videos Table:**
    - Stores data related to videos uploaded by users including video ID, user ID of the uploader, title, description, upload date, duration, views, and status.
