@@ -1,4 +1,4 @@
-The Cassandra schema we've discussed is meticulously designed to align with the specific query requirements of your application. Let's dive into how each table in the Cassandra schema serves the essential queries identified earlier, reflecting the principle of designing around query patterns in Cassandra:
+The Cassandra schema we've discussed is meticulously designed to align with the specific query requirements of our application. Let's dive into how each table in the Cassandra schema serves the essential queries identified earlier, reflecting the principle of designing around query patterns in Cassandra:
 
 ### 1. Retrieving User Information
 
