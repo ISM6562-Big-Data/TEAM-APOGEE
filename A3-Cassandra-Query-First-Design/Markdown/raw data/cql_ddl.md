@@ -119,3 +119,35 @@ CREATE TABLE video_views_by_video (
 
 - Each use case is backed by a specific table designed to satisfy the query efficiently.
 - Redundancy is expected and normal in NoSQL databases like Cassandra to facilitate fast reads.
+
+## CQL Queries as per YouTube Usecase
+
+### 1. Retrieve all videos uploaded by a specific user
+```cql
+SELECT * FROM videos_by_user WHERE user_id = 'UC_YO8yjS9';
+```
+
+### 2. Retrieve all comments on a specific video
+```cql
+SELECT * FROM comments_by_video WHERE video_id = 'VYOjWN14yjS1516214';
+```
+
+### 3. Retrieve all comments made by a specific user
+```cql
+SELECT * FROM comments_by_user WHERE user_id = 'UC_YO13yjS14';
+```
+
+### 4. Listing users who liked a specific video
+```cql
+SELECT * FROM likes_by_video WHERE video_id = 'VYOjWN15yjS1617215';
+```
+
+### 5. Tracking videos liked by a user
+```cql
+SELECT * FROM likes_by_user WHERE user_id = 'UC_YO13yjS14';
+```
+
+### 6. Viewing channel subscriptions
+```cql
+SELECT * FROM subscriptions_by_user WHERE subscriber_id = 'UC_YO1yjS2';
+```
