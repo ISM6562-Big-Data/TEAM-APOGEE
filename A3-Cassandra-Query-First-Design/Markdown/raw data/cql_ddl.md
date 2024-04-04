@@ -120,7 +120,7 @@ CREATE TABLE video_views_by_video (
 - Each use case is backed by a specific table designed to satisfy the query efficiently.
 - Redundancy is expected and normal in NoSQL databases like Cassandra to facilitate fast reads.
 
-## CQL Queries
+## CQL Queries as per YouTube Usecase
 
 ### 1. Retrieve all videos uploaded by a specific user
 ```cql
