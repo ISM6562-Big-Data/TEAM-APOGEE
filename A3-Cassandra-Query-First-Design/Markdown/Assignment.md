@@ -543,4 +543,6 @@ The project of translating a traditional RDBMS schema to a Cassandra schema for 
 ## References
 - All the data that we created are using Python scripts which can be found here, https://github.com/ISM6562-Big-Data/TEAM-APOGEE/tree/main/A3-Cassandra-Query-First-Design/DataGen/Python
 
-- SQL Statements to create Tables can be found at 
+- All SQL Statements along with database backup can found here, https://github.com/ISM6562-Big-Data/TEAM-APOGEE/tree/main/A3-Cassandra-Query-First-Design/SQL
+
+- All CQL statements to create Tablea and shell commands to copy data from CSVs to Casssandra Tables can be found at https://github.com/ISM6562-Big-Data/TEAM-APOGEE/tree/main/A3-Cassandra-Query-First-Design/CQL
