@@ -541,5 +541,8 @@ The project of translating a traditional RDBMS schema to a Cassandra schema for 
 - **Scalability:** The schema's design inherently supports distributed data storage, enabling the YouTube application to scale out across multiple servers and data centers. This capability is essential for accommodating the exponential growth in users and data volume, characteristic of successful online platforms.
 
 ## References
-- All the resources including SQL Statements, CQL Statements, ZShell Commands and sample data that we generated using Python scripts can be found here, [text](https://github.com/ISM6562-Big-Data/TEAM-APOGEE/tree/main/A3-Cassandra-Query-First-Design/Resources)
 
+- 1. https://medium.com/geekculture/system-design-solutions-when-to-use-cassandra-and-when-not-to-496ba51ef07a
+- 2. https://cassandra.apache.org/doc/stable/cassandra/data_modeling/data_modeling_rdbms.html
+- 3. https://reintech.io/blog/effective-data-modeling-for-scalability-in-cassandra
+- 4. All the resources including SQL Statements, CQL Statements, ZShell Commands and sample data that we generated using Python scripts can be found here, [Resources](https://github.com/ISM6562-Big-Data/TEAM-APOGEE/tree/main/A3-Cassandra-Query-First-Design/Resources) 
