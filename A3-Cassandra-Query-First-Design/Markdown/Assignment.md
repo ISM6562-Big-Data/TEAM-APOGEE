@@ -541,8 +541,5 @@ The project of translating a traditional RDBMS schema to a Cassandra schema for 
 - **Scalability:** The schema's design inherently supports distributed data storage, enabling the YouTube application to scale out across multiple servers and data centers. This capability is essential for accommodating the exponential growth in users and data volume, characteristic of successful online platforms.
 
 ## References
-- All the data that we created are using Python scripts which can be found here, https://github.com/ISM6562-Big-Data/TEAM-APOGEE/tree/main/A3-Cassandra-Query-First-Design/DataGen/Python
+- All the resources including SQL Statements, CQL Statements, ZShell Commands and sample data that we generated using Python scripts can be found here, [text](https://github.com/ISM6562-Big-Data/TEAM-APOGEE/tree/main/A3-Cassandra-Query-First-Design/Resources)
 
-- All SQL Statements along with database backup can found here, https://github.com/ISM6562-Big-Data/TEAM-APOGEE/tree/main/A3-Cassandra-Query-First-Design/SQL
-
-- All CQL statements to create Tablea and shell commands to copy data from CSVs to Casssandra Tables can be found at https://github.com/ISM6562-Big-Data/TEAM-APOGEE/tree/main/A3-Cassandra-Query-First-Design/CQL
