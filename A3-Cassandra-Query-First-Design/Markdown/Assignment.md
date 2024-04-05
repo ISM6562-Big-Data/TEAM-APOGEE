@@ -539,3 +539,8 @@ The project of translating a traditional RDBMS schema to a Cassandra schema for 
 
 - **Performance:** Direct access patterns designed into the schema mean that data can be retrieved with minimal overhead, supporting high-throughput and low-latency operations essential for a fluid user experience in a data-intensive application like YouTube.
 - **Scalability:** The schema's design inherently supports distributed data storage, enabling the YouTube application to scale out across multiple servers and data centers. This capability is essential for accommodating the exponential growth in users and data volume, characteristic of successful online platforms.
+
+## References
+- All the data that we created are using Python scripts which can be found here, https://github.com/ISM6562-Big-Data/TEAM-APOGEE/tree/main/A3-Cassandra-Query-First-Design/DataGen/Python
+
+- SQL Statements to create Tables can be found at 
