@@ -542,7 +542,7 @@ The project of translating a traditional RDBMS schema to a Cassandra schema for 
 
 ## References
 
-- 1. https://medium.com/geekculture/system-design-solutions-when-to-use-cassandra-and-when-not-to-496ba51ef07a
-- 2. https://cassandra.apache.org/doc/stable/cassandra/data_modeling/data_modeling_rdbms.html
-- 3. https://reintech.io/blog/effective-data-modeling-for-scalability-in-cassandra
-- 4. All the resources including SQL Statements, CQL Statements, ZShell Commands and sample data that we generated using Python scripts can be found here, [Resources](https://github.com/ISM6562-Big-Data/TEAM-APOGEE/tree/main/A3-Cassandra-Query-First-Design/Resources) 
+1. https://medium.com/geekculture/system-design-solutions-when-to-use-cassandra-and-when-not-to-496ba51ef07a
+2. https://cassandra.apache.org/doc/stable/cassandra/data_modeling/data_modeling_rdbms.html
+3. https://reintech.io/blog/effective-data-modeling-for-scalability-in-cassandra
+4. All the resources including SQL Statements, CQL Statements, ZShell Commands and sample data that we generated using Python scripts can be found here, [Resources](https://github.com/ISM6562-Big-Data/TEAM-APOGEE/tree/main/A3-Cassandra-Query-First-Design/Resources) 
