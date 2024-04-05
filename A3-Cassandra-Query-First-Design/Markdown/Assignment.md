@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This project focuses on the translation of RRDBMS schemas into Cassandra schemas, specifically tailored for big data applications using YouTube as a case study. The aim is to harness Cassandra's capabilities for fast reads and writes, as well as horizontal scalability, to address the demands of handling large volumes of data. Our project involves analyzing the RDBMS schema, identifying essential queries, and designing a Cassandra schema using a "Query First" approach. The scope encompasses documenting the RDBMS schema, designing CQL queries, and creating Cassandra schema tables, partitions, and clustering columns.
+This project focuses on the translation of RDBMS schemas into Cassandra schemas, specifically tailored for big data applications using YouTube as a case study. The aim is to harness Cassandra's capabilities for fast reads and writes, as well as horizontal scalability, to address the demands of handling large volumes of data. Our project involves analyzing the RDBMS schema, identifying essential queries, and designing a Cassandra schema using a "Query First" approach. The scope encompasses documenting the RDBMS schema, designing CQL queries, and creating Cassandra schema tables, partitions, and clustering columns.
 
 ### Objectives
 - To create and analyse a normalised RDBMS schema design and discuss its key componenets and relationships
@@ -160,6 +160,9 @@ Below queries considered essential for the application.
 -- This query retrieves the user profile by their unique user ID.
 SELECT * FROM users WHERE user_id = 'UC_YO8yjS9';
 ```
+| User_ID     | username | email                     | password_hash                             | join_date                    | last_login          |
+| ----------- | -------- | ------------------------- | ----------------------------------------- | ---------------------------- | ------------------- |
+| UC_Y08yjS9  | austin38 | emckenzie@example.org     | 77b43822c318be1c618c2c047e80731be5adc19f | 2023-09-23 14:34:50.569 -0400 | 2024-03-23 14:34:50 |
 
 ## 2. Listing videos uploaded by a specific user:
 
@@ -167,6 +170,11 @@ SELECT * FROM users WHERE user_id = 'UC_YO8yjS9';
 -- This query lists all the videos uploaded by a specific user identified by their user_id.
 SELECT * FROM videos WHERE user_id = 'UC_YO17yjS18';
 ```
+| video_id           | user_id    | title                        | description                                        | upload_date       |
+|--------------------|------------|------------------------------|----------------------------------------------------|-------------------|
+| VY0jWN51yjS5253251 | UC_Y017yjS18 | Relate easy cultural heavy. | Sort usually sport employee position. With world   | 2022-03-0803:20:39 |
+| VY0jWN99yjS100101299 | UC_Y017yjS18 | Strategy deal usually participant. | High than gun develop religious claim available. C | 2020-02-0801:20:29 |
+| VY0jWN320yjS321322520 | UC_Y017yjS18 | Pretty food note expert.    | Really soon sister then least off rate. Deep food F | 2023-03-0805:00:39 |
 
 ## 3. Incrementing video views:
 
@@ -181,6 +189,12 @@ UPDATE videos SET views = views + 1 WHERE video_id = 'VYOjWN14yjS1516214';
 -- This query retrieves all the comments made on a specific video identified by its video_id.
 SELECT * FROM comments WHERE video_id = 'VYOjWN15yjS1617215';
 ```
+| comment_id | user_id      | video_id           | comment_text                | comment_date               |
+|------------|--------------|--------------------|-----------------------------|----------------------------|
+| CYOjsU970  | UC_Y027yjS28 | VY0jWN15yjS1617215 | O que o Z pequeno t fazendo a | 2021-06-12 00:00:00 -0400 |
+| CYOjsU971  | UC_Y068yjS69 | VY0jWN15yjS1617215 | This is garbage             | 2022-08-22 00:00:00 -0400 |
+| CYOjsU972  | UC_Y0180yjS181| VY0jWN15yjS1617215 | Drunk dancing               | 2021-08-10 00:00:00 -0400 |
+| CYOjsU973  | UC_Y070yjS71 | VY0jWN15yjS1617215 | This is America with ...    | 2023-03-17 00:00:00 -0400 |
 
 ## 5. Retrieving comments made by a specific user:
 
@@ -188,6 +202,13 @@ SELECT * FROM comments WHERE video_id = 'VYOjWN15yjS1617215';
 -- This query retrieves all the comments made by a specific user identified by their user_id.
 SELECT * FROM comments WHERE user_id = 'UC_YO13yjS14';
 ```
+| comment_id | user_id    | video_id       | comment_text                                       | comment_date             |
+|------------|------------|----------------|----------------------------------------------------|--------------------------|
+| CYOjsU472  | UC_Y013yjS14 | VY0jWN8yjS9100208 | Is this an antigun video If yes then I disagree its ove | 2024-01-03 00:00:00 -0500 |
+| CYOjsU594  | UC_Y013yjS14 | VY0jWN10yjS1112210 | THIS IS CHINA                                      | 2022-01-17 00:00:00 -0500 |
+| CYOjsU608  | UC_Y013yjS14 | VY0jWN10yjS1112210 | Jesus yaaaaaaaaaasss                               | 2021-05-25 00:00:00 -0400 |
+| CYOjsU951  | UC_Y013yjS14 | VY0jWN14yjS1516214 | Que pedo v                                         | 2023-01-01 00:00:00 -0500 |
+| CYOjsU1112 | UC_Y013yjS14 | VY0jWN17yjS1819217 | The dark man rides the pald horse                 | 2023-11-07 00:00:00 -0500 |
 
 ## 6. Listing users who liked a specific video:
 
@@ -198,6 +219,12 @@ FROM users u
 JOIN videolikes vl ON u.user_id = vl.user_id
 WHERE vl.video_id = 'VYOjWN12yjS1314212';
 ```
+| user_id    | username   | email                  | password_hash                             | join_date               |
+|------------|------------|------------------------|-------------------------------------------|-------------------------|
+| UC_Y074yjS75 | justin00   | asanchez@example.org   | 11a81eac5eb7f9f934a5b77fbc9b174987a8873c5f | 2022-10-27 05:58:28 -0400 |
+| UC_Y080yjS81 | danielle70 | joshua33@example.org   | 8940b19bc74a7622e298c2ffe450ab8f923dfff9 | 2023-06-22 05:43:46 -0400 |
+| UC_Y059yjS60 | jacksonchristine | klinerichard@example.com | abb7d00db719680eed2b5fd4f4d3032872ec3dbd | 2022-01-19 14:57:07 -0500 |
+| UC_Y077yjS78 | uolson     | brian44@example.net    | 8ffbee0186fb84861f826bef70f43425cb56f36d | 2022-01-19 17:06:02 -0500 |
 
 ## 7. Tracking videos liked by a user:
 
@@ -208,6 +235,14 @@ FROM videos v
 JOIN videolikes vl ON v.video_id = vl.video_id
 WHERE vl.user_id = 'UC_YO11yjS12';
 ```
+| video_id       | user_id      | title                                | description                                               | upload_date             |
+|----------------|--------------|--------------------------------------|-----------------------------------------------------------|-------------------------|
+| VY0jWN9yjS1011209 | UC_Y074yjS48 | Walk whom return middle ahead throw prove det | Book PM force us. Left scene evening pick organ... | 2020-03-0803:20:39 |
+| VY0jWN19yjS2021219 | UC_Y055yjS56 | Whom continue itself yeah.              | Draw trouble wife focus baby movement tend ins... | 2021-08-0803:20:39 |
+| VY0jWN45yjS4647245 | UC_Y052yjS53 | Most and return recently.                | Book player machine compare trial alone father... | 2023-02-0803:20:39 |
+| VY0jWN50yjS5152250 | UC_Y015yjS16 | Figure across pull turn bring view old.  | Us board own late day sense knowledge. Happen ... | 2021-07-0803:20:39 |
+
+has context menu
 
 ## 8. Viewing channel subscriptions:
 
@@ -221,6 +256,13 @@ JOIN users u ON s.subscriber_id = u.user_id
 JOIN users u2 ON s.subscribed_to_id = u2.user_id
 WHERE s.subscriber_id = 'UC_YO1yjS2';
 ```
+| subscription_id | subscriber_id | subscribed_to_id | subscription_date        | subscriber_username | subscribed_to_username |
+|-----------------|---------------|------------------|--------------------------|---------------------|------------------------|
+| SY0j0200        | UC_Y01yjS2    | UC_Y0193yjS194   | 2023-12-13 00:00:00 -0500 | greenwilliam        | salazarsteph           |
+| SY0j1201        | UC_Y01yjS2    | UC_Y036yjS37     | 2022-10-28 00:00:00 -0400 | greenwilliam        | scottmichael           |
+| SY0j2202        | UC_Y01yjS2    | UC_Y030yjS31     | 2020-02-25 00:00:00 -0500 | greenwilliam        | tgarza                 |
+| SY0j3203        | UC_Y01yjS2    | UC_Y0147yjS148   | 2022-06-23 00:00:00 -0400 | greenwilliam        | john46                 |
+| SY0j4204        | UC_Y01yjS2    | UC_Y0116yjS117   | 2022-05-22 00:00:00 -0400 | greenwilliam        | morrisevan             |
 
 ### For subscriptions to a channel:
 
