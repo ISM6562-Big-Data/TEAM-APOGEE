@@ -281,8 +281,8 @@ Adopting the "Query First" design philosophy, this section documents the process
 
 ### Design Process
 
-#### Query Optimization:
-The Cassandra schema we've discussed is meticulously designed to align with the specific query requirements of our application. Let's dive into how each table in the Cassandra schema serves the essential queries identified earlier, reflecting the principle of designing around query patterns in Cassandra:
+#### Query First Design:
+The Cassandra schema we've discussed is meticulously designed to align with the specific query requirements of our application. Let's dive into how each table in the Cassandra schema serves the essential queries identified earlier, reflecting the principle of designing around query patterns in Cassandra[2]:
 
 #### 1. Retrieving User Information
 
@@ -439,7 +439,7 @@ CREATE TABLE video_views_by_video (
 ### Considerations
 
 - Each use case is backed by a specific table designed to satisfy the query efficiently.
-- Redundancy is expected and normal in NoSQL databases like Cassandra to facilitate fast reads.
+- Redundancy is expected and normal in NoSQL databases like Cassandra to facilitate fast reads.[1]
 
 ## CQL Queries as per YouTube Usecase
 
@@ -478,7 +478,7 @@ The design decisions made in adapting the above schema for Cassandra from a trad
 
 - **Denormalization and Redundancy**
 
-    In traditional RDBMS systems, normalization is a core principle used to reduce redundancy and ensure data integrity. However, this often requires complex joins to reconstruct data for queries, which can become a performance bottleneck in distributed systems. Cassandra's emphasis on denormalization and redundancy is a strategic choice designed to minimize the need for joins, thereby significantly improving read performance. Storing data in the form it will be queried allows for fast, direct lookups without the overhead of assembling data from multiple tables.
+    In traditional RDBMS systems, normalization is a core principle used to reduce redundancy and ensure data integrity. However, this often requires complex joins to reconstruct data for queries, which can become a performance bottleneck in distributed systems. Cassandra's emphasis on denormalization and redundancy is a strategic choice designed to minimize the need for joins, thereby significantly improving read performance.[1] Storing data in the form it will be queried allows for fast, direct lookups without the overhead of assembling data from multiple tables.
 
 - **Schema Design Based on Query Patterns**
 
@@ -519,7 +519,7 @@ In this section, let's discuss on the challenges we faced during the translation
 
 ## Conclusion
 
-The project of translating a traditional RDBMS schema to a Cassandra schema for an application akin to YouTube offers profound insights into the intricacies of data modeling in NoSQL environments, specifically within the domain of high-scalability requirements. Here are the key learning outcomes and their potential real-world implications:
+The project of translating a traditional RDBMS schema to a Cassandra schema for an application akin to YouTube offers profound insights into the intricacies of data modeling in NoSQL environments, specifically within the domain of high-scalability requirements.[3] Here are the key learning outcomes and their potential real-world implications:
 
 ### Key Learning Outcomes
 
