@@ -13,10 +13,9 @@ This repository houses the Team Apogee's Project, a comprehensive solution desig
 
 ### Technologies Used
 This project leverages the following technologies:
-TBD
-
-### Project Setup
-- TBD
-
-#### Prerequisites
-- TBD
+- Cassandra
+- MongoDB
+- Spark
+- Python
+- PySpark
+- PostgreSQL
